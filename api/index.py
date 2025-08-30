@@ -6,7 +6,7 @@ import os
 
 app = FastAPI()
 translator = ctranslate2.Translator("opus-mt-en-zh", device="cpu")  # Vercel 无 GPU
-sp = spm.SentencePieceProcessor("opus-mt-en-zh/spm.model")
+sp = spm.SentencePieceProcessor("opus-mt-en-zh/source.spm")
 
 class TranslationRequest(BaseModel):
     texts: list[str]
