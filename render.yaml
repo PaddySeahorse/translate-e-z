@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: translate-api
+    env: docker
+    plan: free  # 免费层
+    autoDeploy: true
+    region: oregon  # Render 目前免费区在 Oregon
+    envVars:
+      - key: MODEL_DIR
+        value: /app/opus-mt-en-zh
+      - key: HF_TOKENIZER
+        value: Helsinki-NLP/opus-mt-en-zh
+      - key: MAX_BATCH_SIZE
+        value: "64"
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    # 如果服务 30 分钟没请求，会自动休眠，免费层就是这样的
+    disk:
+      name: model-storage
+      mountPath: /app/opus-mt-en-zh
+      sizeGB: 1
